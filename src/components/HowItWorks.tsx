@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import AnimatedHeading from "./AnimatedHeading";
 
 const steps = [
   {
@@ -45,6 +47,56 @@ const stepVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+function CountUp({ target, suffix = "", decimals = 0 }: { target: number; suffix?: string; decimals?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const [display, setDisplay] = useState("0");
+
+  useEffect(() => {
+    if (!inView) return;
+    const duration = 2000;
+    const start = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = eased * target;
+      setDisplay(value.toFixed(decimals));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, target, decimals]);
+
+  return <span ref={ref}>{display}{suffix}</span>;
+}
+
+const stats = [
+  { target: 500, suffix: "+", label: "Happy Customers", decimals: 0 },
+  { target: 4.9, suffix: "★", label: "Average Rating", decimals: 1 },
+  { target: 100, suffix: "%", label: "Licensed & Insured", decimals: 0 },
+  { target: 24, suffix: "hr", label: "Response Time", decimals: 0 },
+];
+
+function StatsCounter() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.5 }}
+      className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+    >
+      {stats.map((item) => (
+        <div key={item.label} className="text-center p-4 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm">
+          <div className="text-4xl sm:text-5xl font-black text-accent-gold">
+            <CountUp target={item.target} suffix={item.suffix} decimals={item.decimals} />
+          </div>
+          <div className="text-sm text-gray mt-2 font-medium">{item.label}</div>
+        </div>
+      ))}
+    </motion.div>
+  );
+}
+
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-24 bg-gray-light">
@@ -56,9 +108,9 @@ export default function HowItWorks() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-black text-primary-dark">
+          <AnimatedHeading className="text-4xl sm:text-5xl font-black text-primary-dark">
             How It Works
-          </h2>
+          </AnimatedHeading>
           <p className="mt-4 text-xl text-gray max-w-2xl mx-auto">
             Three simple steps to a junk-free space.
           </p>
@@ -96,25 +148,7 @@ export default function HowItWorks() {
           ))}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-16 flex flex-wrap justify-center gap-8 text-center"
-        >
-          {[
-            { stat: "500+", label: "Happy Customers" },
-            { stat: "Same Day", label: "Service Available" },
-            { stat: "100%", label: "Licensed & Insured" },
-            { stat: "Eco", label: "Friendly Disposal" },
-          ].map((item) => (
-            <div key={item.label} className="px-6">
-              <div className="text-3xl font-black text-accent-gold">{item.stat}</div>
-              <div className="text-sm text-gray mt-1">{item.label}</div>
-            </div>
-          ))}
-        </motion.div>
+        <StatsCounter />
       </div>
     </section>
   );

@@ -189,20 +189,44 @@ export default function Hero() {
         >
           <Link
             href="sms:+19546554193?body=Hi%20Junk%20Mob!%20I%20need%20a%20quote%20for%20junk%20removal."
-            className="relative bg-accent-gold hover:bg-accent-gold-light text-white font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 shadow-[0_0_30px_rgba(200,164,21,0.5)] hover:shadow-[0_0_50px_rgba(200,164,21,0.7)]"
+            className="group relative bg-accent-gold hover:bg-accent-gold-light text-white font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 shadow-[0_0_30px_rgba(200,164,21,0.5)] hover:shadow-[0_0_50px_rgba(200,164,21,0.7)] overflow-hidden"
           >
+            {/* Rotating glow ring */}
+            <motion.span
+              className="absolute -inset-1 rounded-full opacity-75"
+              style={{
+                background: "conic-gradient(from 0deg, transparent, rgba(200,164,21,0.8), transparent, rgba(200,164,21,0.4), transparent)",
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            />
+            {/* Pulse */}
             <motion.span
               className="absolute inset-0 rounded-full bg-accent-gold/50"
-              animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0, 0.5] }}
+              animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
+            {/* Glare sweep */}
+            <span className="absolute inset-0 rounded-full overflow-hidden">
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
+                animate={{ x: ["-200%", "200%"] }}
+                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 3 }}
+              />
+            </span>
+            {/* Inner background */}
+            <span className="absolute inset-[2px] rounded-full bg-accent-gold group-hover:bg-accent-gold-light transition-colors" />
             <span className="relative">Get Free Quote</span>
           </Link>
           <Link
             href="tel:+19546554193"
-            className="border-2 border-white/70 text-white hover:bg-white hover:text-primary-dark font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 backdrop-blur-sm"
+            className="group relative border-2 border-white/70 text-white hover:bg-white hover:text-primary-dark font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 backdrop-blur-sm overflow-hidden"
           >
-            Call (954) 655-4193
+            {/* Glare sweep on hover */}
+            <span className="absolute inset-0 rounded-full overflow-hidden">
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+            </span>
+            <span className="relative">Call (954) 655-4193</span>
           </Link>
         </motion.div>
 

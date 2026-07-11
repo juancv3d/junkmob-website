@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import AnimatedHeading from "./AnimatedHeading";
 
 const tiers = [
   {
@@ -88,9 +89,9 @@ export default function Pricing() {
           transition={{ duration: 0.5 }}
           className="text-center mb-6"
         >
-          <h2 className="text-4xl sm:text-5xl font-black text-primary-dark">
+          <AnimatedHeading className="text-4xl sm:text-5xl font-black text-primary-dark">
             Volume-Based Pricing
-          </h2>
+          </AnimatedHeading>
           <p className="mt-4 text-xl text-gray max-w-2xl mx-auto">
             6 ft x 12 ft Trailer — Clear, easy pricing for faster approvals.
           </p>
