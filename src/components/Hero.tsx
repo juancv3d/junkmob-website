@@ -4,61 +4,18 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
-interface Particle {
-  width: number;
-  height: number;
-  left: string;
-  top: string;
-  xDrift: number;
-  duration: number;
-  delay: number;
-}
-
-function FloatingParticles() {
-  const [particles, setParticles] = useState<Particle[]>([]);
-
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 15 }, () => ({
-        width: Math.random() * 6 + 4,
-        height: Math.random() * 6 + 4,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        xDrift: Math.random() * 20 - 10,
-        duration: Math.random() * 4 + 3,
-        delay: Math.random() * 2,
-      }))
-    );
-  }, []);
-
-  if (particles.length === 0) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full bg-white/10"
-          style={{ width: p.width, height: p.height, left: p.left, top: p.top }}
-          animate={{
-            y: [0, -30, 0],
-            x: [0, p.xDrift, 0],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            delay: p.delay,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+import { ArrowRight, Phone } from "lucide-react";
+import PixelCanvas from "./ui/PixelCanvas";
+import { cn } from "@/lib/utils";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const TRUST_ITEMS = [
+  { icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", label: "Licensed & Insured" },
+  { icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", label: "Same Day Service" },
+  { icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064", label: "Eco-Friendly" },
+  { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z", label: "Pierce County" },
+];
 
 function ScrollIndicator() {
   return (
@@ -77,185 +34,151 @@ function ScrollIndicator() {
   );
 }
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.4 + i * 0.1, duration: 0.5 },
-  }),
-};
-
 export default function Hero() {
-  const headlineWords = ["We", "Make", "Your", "Junk"];
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Ken Burns animated background */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ scale: [1, 1.08, 1] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Image
-          src={`${basePath}/junkmob_pic3.jpg`}
-          alt="Junk Mob truck and trailer"
-          fill
-          className="object-cover"
-          priority
+    <section className="relative w-full min-h-[100dvh] bg-[#0a1f0d] flex flex-col justify-between md:justify-center md:gap-6 py-8 md:py-0 px-2 sm:px-6 overflow-hidden select-none isolate">
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+        .jm-glass-text {
+          color: transparent;
+          background: linear-gradient(135deg, rgba(200,164,21,1) 0%, rgba(255,255,255,0.9) 25%, rgba(200,164,21,0.4) 45%, rgba(255,255,255,1) 55%, rgba(200,164,21,0.6) 75%, rgba(255,255,255,0.9) 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-stroke: 1px rgba(200,164,21,0.3);
+          filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5)) drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+          animation: shimmer 6s linear infinite;
+        }
+        @keyframes shimmer {
+          0% { background-position: 200% center; }
+          100% { background-position: 0% center; }
+        }
+      `}</style>
+
+      {/* Pixel Canvas Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <PixelCanvas
+          colors={[
+            "rgba(27,94,32,0.4)",
+            "rgba(27,94,32,0.3)",
+            "rgba(46,125,50,0.3)",
+            "rgba(46,125,50,0.2)",
+            "rgba(200,164,21,0.5)",
+          ]}
+          gap={6}
+          speed={25}
         />
-      </motion.div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a1f0d_100%)] pointer-events-none opacity-75" />
+      </div>
 
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/90 via-primary-dark/80 to-primary/50 animate-[gradientShift_8s_ease-in-out_infinite]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-      {/* Floating particles */}
-      <FloatingParticles />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-16">
-        {/* Floating animated logo */}
+      {/* Top: Logo */}
+      <div
+        className={cn(
+          "flex flex-col items-center justify-center order-1 md:order-1 mt-20 sm:mt-0 pointer-events-none transition-all duration-1000 transform",
+          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
+        )}
+      >
         <motion.div
-          initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-          className="mb-8"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Image
-              src={`${basePath}/junkmob-removebg-preview.png`}
-              alt="Junk Mob Logo"
-              width={160}
-              height={160}
-              className="mx-auto drop-shadow-[0_0_30px_rgba(200,164,21,0.4)] w-[100px] h-[100px] sm:w-[160px] sm:h-[160px]"
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Headline with staggered word animation */}
-        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black text-white leading-tight">
-          {headlineWords.map((word, i) => (
-            <motion.span
-              key={word}
-              custom={i}
-              initial="hidden"
-              animate="visible"
-              variants={wordVariants}
-              className="inline-block mr-[0.3em]"
-            >
-              {word}
-            </motion.span>
-          ))}
-          <br />
-          {/* Shimmer text effect on "Disappear" */}
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="relative inline-block text-accent-gold"
-          >
-            Disappear
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 3 }}
-              style={{ WebkitBackgroundClip: "text" }}
-            />
-          </motion.span>
-        </h1>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.1 }}
-          className="mt-8 text-xl sm:text-2xl text-white/90 max-w-2xl mx-auto font-light"
-        >
-          Fast, affordable junk removal for homes and businesses.
-          <br className="hidden sm:block" />
-          Same-day service available in Pierce County.
-        </motion.p>
-
-        {/* CTAs with glow effect */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-          className="mt-10 flex flex-col sm:flex-row gap-5 justify-center"
-        >
-          <Link
-            href="sms:+19546554193?body=Hi%20Junk%20Mob!%20I%20need%20a%20quote%20for%20junk%20removal."
-            className="group relative bg-accent-gold hover:bg-accent-gold-light text-white font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 shadow-[0_0_30px_rgba(200,164,21,0.5)] hover:shadow-[0_0_50px_rgba(200,164,21,0.7)] overflow-hidden"
-          >
-            {/* Rotating glow ring */}
-            <motion.span
-              className="absolute -inset-1 rounded-full opacity-75"
-              style={{
-                background: "conic-gradient(from 0deg, transparent, rgba(200,164,21,0.8), transparent, rgba(200,164,21,0.4), transparent)",
-              }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            />
-            {/* Pulse */}
-            <motion.span
-              className="absolute inset-0 rounded-full bg-accent-gold/50"
-              animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            {/* Glare sweep */}
-            <span className="absolute inset-0 rounded-full overflow-hidden">
-              <motion.span
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
-                animate={{ x: ["-200%", "200%"] }}
-                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 3 }}
-              />
-            </span>
-            {/* Inner background */}
-            <span className="absolute inset-[2px] rounded-full bg-accent-gold group-hover:bg-accent-gold-light transition-colors" />
-            <span className="relative">Get Free Quote</span>
-          </Link>
-          <Link
-            href="tel:+19546554193"
-            className="group relative border-2 border-white/70 text-white hover:bg-white hover:text-primary-dark font-bold px-10 py-5 rounded-full text-lg transition-all hover:scale-105 backdrop-blur-sm overflow-hidden"
-          >
-            {/* Glare sweep on hover */}
-            <span className="absolute inset-0 rounded-full overflow-hidden">
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
-            </span>
-            <span className="relative">Call (954) 655-4193</span>
-          </Link>
-        </motion.div>
-
-        {/* Trust badges with glassmorphism */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8, duration: 0.6 }}
-          className="mt-8 sm:mt-14 mb-16 sm:mb-0 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-        >
-          {[
-            { icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", label: "Licensed & Insured" },
-            { icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", label: "Same Day Service" },
-            { icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064", label: "Eco-Friendly" },
-          ].map((badge) => (
-            <div
-              key={badge.label}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20"
-            >
-              <svg className="w-5 h-5 text-accent-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={badge.icon} />
-              </svg>
-              <span className="text-white text-sm font-medium">{badge.label}</span>
-            </div>
-          ))}
+          <Image
+            src={`${basePath}/junkmob-removebg-preview.png`}
+            alt="Junk Mob Logo"
+            width={140}
+            height={140}
+            className="mx-auto drop-shadow-[0_0_40px_rgba(200,164,21,0.5)] w-[90px] h-[90px] sm:w-[140px] sm:h-[140px]"
+            priority
+          />
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Center: Glass Headline */}
+      <div className="flex flex-col items-center justify-center text-center my-auto md:my-0 order-2 md:order-2 px-1 w-full pointer-events-none">
+        <h1
+          className={cn(
+            "jm-glass-text flex flex-row items-center justify-center gap-2 sm:gap-4 lg:gap-6 px-1 w-full flex-wrap text-[2.8rem] sm:text-6xl md:text-8xl lg:text-9xl leading-none transition-all duration-1000 transform",
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+          style={{ transitionDelay: "200ms" }}
+        >
+          <span className="font-serif italic font-medium">Junk</span>
+          <span className="font-sans font-extrabold tracking-tighter">Disappears.</span>
+        </h1>
+
+        <p
+          className={cn(
+            "mt-6 sm:mt-8 text-sm sm:text-lg md:text-xl font-light text-white/80 max-w-[95%] sm:max-w-md md:max-w-xl px-1 leading-relaxed transition-all duration-1000 transform",
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+          style={{ transitionDelay: "350ms" }}
+        >
+          Fast, affordable junk removal for homes and businesses.
+          Same-day service available in Pierce County.
+        </p>
+      </div>
+
+      {/* CTAs */}
+      <div
+        className={cn(
+          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-4 md:mt-10 mb-4 md:mb-0 order-3 md:order-3 transition-all duration-1000 transform px-1",
+          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}
+        style={{ transitionDelay: "500ms" }}
+      >
+        <Link
+          href="sms:+19546554193?body=Hi%20Junk%20Mob!%20I%20need%20a%20quote%20for%20junk%20removal."
+          className="relative inline-flex h-12 md:h-14 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#C8A415] to-[#a8890f] px-6 md:px-10 text-sm md:text-base font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(200,164,21,0.3)] ring-1 ring-[#C8A415]/30 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
+        >
+          <span className="hidden sm:inline">Get Free Quote</span>
+          <span className="sm:hidden">Free Quote</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+        <Link
+          href="tel:+19546554193"
+          className="relative inline-flex h-12 md:h-14 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-white/10 to-white/5 px-6 md:px-10 text-sm md:text-base font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.05)] ring-1 ring-white/20 backdrop-blur-md transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
+        >
+          <Phone className="w-4 h-4" />
+          <span className="hidden sm:inline">Call (954) 655-4193</span>
+          <span className="sm:hidden">Call Now</span>
+        </Link>
+      </div>
+
+      {/* Trust Marquee */}
+      <div
+        className={cn(
+          "absolute bottom-14 sm:bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
+          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}
+        style={{ transitionDelay: "650ms" }}
+      >
+        <div className="relative w-full max-w-4xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+          <div className="flex w-max gap-8 sm:gap-12 py-2 animate-marquee">
+            {[...TRUST_ITEMS, ...TRUST_ITEMS].map((item, i) => (
+              <div key={`${item.label}-${i}`} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+                <svg className="w-4 h-4 text-[#C8A415]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                </svg>
+                <span className="text-white/70 text-xs sm:text-sm font-medium whitespace-nowrap">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <ScrollIndicator />
     </section>
   );
