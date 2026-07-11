@@ -58,6 +58,8 @@ function FloatingParticles() {
   );
 }
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 function ScrollIndicator() {
   return (
     <motion.div
@@ -96,7 +98,7 @@ export default function Hero() {
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       >
         <Image
-          src="/junkmob_pic3.jpg"
+          src={`${basePath}/junkmob_pic3.jpg`}
           alt="Junk Mob truck and trailer"
           fill
           className="object-cover"
@@ -125,7 +127,7 @@ export default function Hero() {
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
             <Image
-              src="/junkmob-removebg-preview.png"
+              src={`${basePath}/junkmob-removebg-preview.png`}
               alt="Junk Mob Logo"
               width={160}
               height={160}

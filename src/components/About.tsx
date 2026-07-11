@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const team = [
-  { name: "Mao", role: "Co-Founder", image: "/junkmob_Mao.jpg" },
-  { name: "Jhon", role: "Co-Founder", image: "/junkmob_jhon.jpg" },
+  { name: "Mao", role: "Co-Founder", image: `${basePath}/junkmob_Mao.jpg` },
+  { name: "Jhon", role: "Co-Founder", image: `${basePath}/junkmob_jhon.jpg` },
 ];
 
-const gallery = ["/junkmob_pic1.jpg", "/junkmob_pic2.jpg", "/junkmob_pic3.jpg"];
+const gallery = [`${basePath}/junkmob_pic1.jpg`, `${basePath}/junkmob_pic2.jpg`, `${basePath}/junkmob_pic3.jpg`];
 
 export default function About() {
   return (

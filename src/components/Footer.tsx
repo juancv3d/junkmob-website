@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Footer() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
     <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -9,7 +10,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <Image
-                src="/junkmob-removebg-preview.png"
+                src={`${basePath}/junkmob-removebg-preview.png`}
                 alt="Junk Mob"
                 width={60}
                 height={60}
