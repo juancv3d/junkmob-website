@@ -100,7 +100,7 @@ export default function Hero() {
             alt="Junk Mob Logo"
             width={140}
             height={140}
-            className="mx-auto drop-shadow-[0_0_40px_rgba(200,164,21,0.5)] w-[90px] h-[90px] sm:w-[140px] sm:h-[140px]"
+            className="mx-auto drop-shadow-[0_0_40px_rgba(200,164,21,0.5)] w-[130px] h-[130px] sm:w-[160px] sm:h-[160px]"
             priority
           />
         </motion.div>
@@ -134,7 +134,7 @@ export default function Hero() {
       {/* CTAs */}
       <div
         className={cn(
-          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-4 md:mt-10 mb-4 md:mb-0 order-3 md:order-3 transition-all duration-1000 transform px-1",
+          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-4 md:mt-10 mb-20 sm:mb-4 md:mb-0 order-3 md:order-3 transition-all duration-1000 transform px-1 z-20",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "500ms" }}
@@ -160,7 +160,7 @@ export default function Hero() {
       {/* Trust Marquee */}
       <div
         className={cn(
-          "absolute bottom-14 sm:bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
+          "absolute bottom-4 sm:bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "650ms" }}
