@@ -63,13 +63,13 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 function ScrollIndicator() {
   return (
     <motion.div
-      className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20"
       animate={{ y: [0, 12, 0] }}
       transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
     >
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-white/60 text-xs uppercase tracking-widest">Scroll</span>
-        <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="flex flex-col items-center gap-1">
+        <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest">Scroll</span>
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
@@ -114,7 +114,7 @@ export default function Hero() {
       <FloatingParticles />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-16">
         {/* Floating animated logo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
@@ -131,7 +131,7 @@ export default function Hero() {
               alt="Junk Mob Logo"
               width={160}
               height={160}
-              className="mx-auto drop-shadow-[0_0_30px_rgba(200,164,21,0.4)]"
+              className="mx-auto drop-shadow-[0_0_30px_rgba(200,164,21,0.4)] w-[100px] h-[100px] sm:w-[160px] sm:h-[160px]"
             />
           </motion.div>
         </motion.div>
@@ -211,7 +211,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 0.6 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 sm:mt-14 mb-16 sm:mb-0 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
         >
           {[
             { icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", label: "Licensed & Insured" },
