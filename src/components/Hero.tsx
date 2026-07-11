@@ -20,16 +20,14 @@ const TRUST_ITEMS = [
 function ScrollIndicator() {
   return (
     <motion.div
-      className="hidden sm:flex absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20"
+      className="hidden sm:flex absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-1"
       animate={{ y: [0, 12, 0] }}
       transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
     >
-      <div className="flex flex-col items-center gap-1">
-        <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest">Scroll</span>
-        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </div>
+      <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest">Scroll</span>
+      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
     </motion.div>
   );
 }
@@ -134,7 +132,7 @@ export default function Hero() {
       {/* CTAs */}
       <div
         className={cn(
-          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-2 md:mt-6 order-3 transition-all duration-1000 transform px-1 z-20",
+          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-2 md:mt-6 mb-14 sm:mb-16 order-3 transition-all duration-1000 transform px-1 z-20",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "500ms" }}
@@ -160,7 +158,7 @@ export default function Hero() {
       {/* Trust Marquee */}
       <div
         className={cn(
-          "hidden sm:flex absolute bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
+          "absolute bottom-4 sm:bottom-16 left-0 right-0 w-full z-10 pointer-events-none flex flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "650ms" }}
