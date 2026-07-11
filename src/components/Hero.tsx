@@ -20,7 +20,7 @@ const TRUST_ITEMS = [
 function ScrollIndicator() {
   return (
     <motion.div
-      className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20"
+      className="hidden sm:flex absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20"
       animate={{ y: [0, 12, 0] }}
       transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
     >
@@ -43,7 +43,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[100dvh] bg-[#0a1f0d] flex flex-col justify-between md:justify-center md:gap-6 py-8 md:py-0 px-2 sm:px-6 overflow-hidden select-none isolate">
+    <section className="relative w-full min-h-[100dvh] bg-[#0a1f0d] flex flex-col justify-center items-center gap-6 py-8 md:py-0 px-2 sm:px-6 overflow-hidden select-none isolate">
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -87,7 +87,7 @@ export default function Hero() {
       {/* Top: Logo */}
       <div
         className={cn(
-          "flex flex-col items-center justify-center order-1 md:order-1 mt-20 sm:mt-0 pointer-events-none transition-all duration-1000 transform",
+          "flex flex-col items-center justify-center order-1 mt-16 sm:mt-0 pointer-events-none transition-all duration-1000 transform",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
         )}
       >
@@ -100,14 +100,14 @@ export default function Hero() {
             alt="Junk Mob Logo"
             width={140}
             height={140}
-            className="mx-auto drop-shadow-[0_0_40px_rgba(200,164,21,0.5)] w-[130px] h-[130px] sm:w-[160px] sm:h-[160px]"
+            className="mx-auto drop-shadow-[0_0_40px_rgba(200,164,21,0.5)] w-[160px] h-[160px] sm:w-[180px] sm:h-[180px]"
             priority
           />
         </motion.div>
       </div>
 
       {/* Center: Glass Headline */}
-      <div className="flex flex-col items-center justify-center text-center my-auto md:my-0 order-2 md:order-2 px-1 w-full pointer-events-none">
+      <div className="flex flex-col items-center justify-center text-center order-2 px-1 w-full pointer-events-none">
         <h1
           className={cn(
             "jm-glass-text flex flex-row items-center justify-center gap-2 sm:gap-4 lg:gap-6 px-1 w-full flex-wrap text-[2.8rem] sm:text-6xl md:text-8xl lg:text-9xl leading-none transition-all duration-1000 transform",
@@ -134,7 +134,7 @@ export default function Hero() {
       {/* CTAs */}
       <div
         className={cn(
-          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-4 md:mt-10 mb-20 sm:mb-4 md:mb-0 order-3 md:order-3 transition-all duration-1000 transform px-1 z-20",
+          "pointer-events-auto flex flex-row items-center justify-center gap-3 mt-2 md:mt-6 order-3 transition-all duration-1000 transform px-1 z-20",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "500ms" }}
@@ -160,7 +160,7 @@ export default function Hero() {
       {/* Trust Marquee */}
       <div
         className={cn(
-          "absolute bottom-4 sm:bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
+          "hidden sm:flex absolute bottom-8 left-0 right-0 w-full z-10 pointer-events-none flex-col items-center justify-center gap-3 transition-all duration-1000 transform order-4",
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}
         style={{ transitionDelay: "650ms" }}
