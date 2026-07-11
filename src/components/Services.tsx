@@ -13,7 +13,7 @@ const services = [
       </svg>
     ),
     items: ["Home cleanouts", "Garage & attic clearing", "Yard debris removal", "Estate cleanups", "Hoarding situations"],
-    span: "md:col-span-2 md:row-span-2",
+    span: "md:col-span-2",
     featured: true,
   },
   {
@@ -25,7 +25,7 @@ const services = [
       </svg>
     ),
     items: ["Office cleanouts", "Construction debris", "Warehouse clearing", "Property management"],
-    span: "md:col-span-1",
+    span: "md:col-span-2",
     featured: false,
   },
   {
@@ -37,7 +37,7 @@ const services = [
       </svg>
     ),
     items: ["Appliances & fridges", "Hot tubs & pianos", "Electronics & TVs", "Tires & scrap metal"],
-    span: "md:col-span-1",
+    span: "md:col-span-2",
     featured: false,
   },
   {
@@ -90,7 +90,7 @@ export default function Services() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto"
+          className="grid grid-cols-1 md:grid-cols-4 gap-4"
         >
           {services.map((service) => (
             <motion.div
