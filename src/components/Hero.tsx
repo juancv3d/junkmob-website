@@ -138,7 +138,7 @@ export default function Hero() {
         style={{ transitionDelay: "500ms" }}
       >
         <Link
-          href="sms:+19546554193?body=Hi%20Junk%20Mob!%20I%20need%20a%20quote%20for%20junk%20removal."
+          href="#contact"
           className="relative inline-flex h-12 md:h-14 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#C8A415] to-[#a8890f] px-6 md:px-10 text-sm md:text-base font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(200,164,21,0.3)] ring-1 ring-[#C8A415]/30 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
         >
           <span className="hidden sm:inline">Get Free Quote</span>
