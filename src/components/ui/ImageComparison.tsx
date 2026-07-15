@@ -88,6 +88,7 @@ export default function ImageComparison({
       <img
         src={afterSrc}
         alt={afterLabel}
+        loading="lazy"
         className="absolute inset-0 w-full h-full object-cover"
         draggable={false}
       />
@@ -100,6 +101,7 @@ export default function ImageComparison({
         <img
           src={beforeSrc}
           alt={beforeLabel}
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
