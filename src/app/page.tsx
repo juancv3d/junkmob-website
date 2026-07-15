@@ -3,6 +3,7 @@ import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
+import JobsDone from "@/components/JobsDone";
 import About from "@/components/About";
 import ContactForm from "@/components/ContactForm";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Pricing />
       <HowItWorks />
       <Testimonials />
+      <JobsDone />
       <About />
       <ContactForm />
     </>
