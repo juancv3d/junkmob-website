@@ -17,21 +17,6 @@ const TRUST_ITEMS = [
   { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z", label: "Pierce County" },
 ];
 
-function ScrollIndicator() {
-  return (
-    <motion.div
-      className="hidden sm:flex absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-1"
-      animate={{ y: [0, 12, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest">Scroll</span>
-      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    </motion.div>
-  );
-}
-
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -177,7 +162,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <ScrollIndicator />
     </section>
   );
 }
